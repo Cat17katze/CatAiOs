@@ -42,8 +42,12 @@ function install(getAPM,getSKY)
   end
   bar(60,"Downloading files","Source files")
   wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/LoadingScreen.lua",".LoadingScreen")
-  bar(80,"Downloading files","Source files")
+  bar(70,"Downloading files","Source files")
   wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/LuaDebugger.lua",".LuaDebugger")
+  bar(80,"Downloading files","Source files")
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/installer/OOTB.temp.lua","startup")
+  bar(90,"Downloading files","Source files")
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/about.lua","about")
   bar(100,"Downloading files","Source files")
   wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/recolor.lua",".recolor")
   if getSKY then
