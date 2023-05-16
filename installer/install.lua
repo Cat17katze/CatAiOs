@@ -1,4 +1,4 @@
-error("This file is not ready yet!")
+
 function reset()
   term.setBackgroundColor(colors.black)
   term.setCursorPos(1,1)
@@ -6,11 +6,12 @@ function reset()
   term.setTextColor(colors.lime)
 end
 reset()
-term.blit("Welcome to CatAiOs!","24324321431be4fbe4f","fffffffffffffffffff")
+term.blit("Welcome to CatAiOs!","2432432143124324324","fffffffffffffffffff")
+print("")
 print("Please relax while we prepare your computer!")
 function bar(procent,maintask,comment)
   reset()
-  term.blit("Welcome to CatAiOs!","24324321431be4fbe4f","fffffffffffffffffff")
+  term.blit("Welcome to CatAiOs!","2432432143124324324","ggggggggggggggggggg")
   print(maintask)
   print(comment)
   print("[*****]")
@@ -27,14 +28,14 @@ function install(getAPM,getSKY)
   if getAPM then
     bar(10,"Downloading files","APM")
     wget("https://raw.githubusercontent.com/TheAio/CC-APM/main/APM","APM")
-    bar(15,"Downloading files","APMs")
+    bar(20,"Downloading files","APMs")
     wget("https://raw.githubusercontent.com/TheAio/CC-APM/main/APMs","APMs")
     bar(50,"Fetching APM files","FTP")
     shell.run("APM install 8 -y")
     if getSKY then
       bar(100,"Fetching APM files","skynet")
+      shell.run("APM install 19 -y")
     end
-    shell.run("APM install 19 -y")
   end
   bar(20,"Downloading files","Source files")
 end
@@ -45,15 +46,18 @@ shell.run("wget https://raw.githubusercontent.com/osmarks/skynet/master/LICENSE 
 if fs.exists("LICENSE") then
   if fs.exists("LICENSE2") and fs.exists("LICENSE3") then
     term.setTextColor(colors.white)
+    print("Press any key to continue!")
+    os.pullEvent("key")
     term.clear()
     term.setCursorPos(1,1)
     print("In order to continue, please carefully read through and accept")
     print("the GNU AFFERO GENERAL PUBLIC LICENSE Version 3, 19 November 2007")
     print("To read the license press 'R' to accept it directly press 'Y' otherwise press any other key")
     function licenseFunc(LF)
-          E,K = os.pullEvent("key")
+    E,K = os.pullEvent("key")
     if K == keys.y then
        print("Thank you!")
+       return true
     elseif K == keys.r then
       term.clear()
       term.setCursorPos(1,1)
@@ -68,17 +72,23 @@ if fs.exists("LICENSE") then
         end
       end
       k=0
-      while true do
-        for j=1,20 do
+      read = false
+      while read == false do
+        for j=1,40 do
           k=k+1
-          if k == #file+1 then
+          if k+j == #file+1 then
             break
           else
+            if file[k] == nil then
+                read=true
+                break
+            end
             print(file[k])
           end
           print("--PRESS ENTER TO CONTINUE--")
           while true do
-            if os.pullEvent("key") == keys.enter then
+            E,K = os.pullEvent("key")
+            if K == keys.enter then
               break
             else
               sleep(1)
@@ -87,6 +97,7 @@ if fs.exists("LICENSE") then
           term.clear()
         end
       end
+      sleep(1)
     else
       return false
     end
