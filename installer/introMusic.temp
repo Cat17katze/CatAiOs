@@ -1,0 +1,11 @@
+i=peripheral.find("speaker")
+if i == nil then
+  return false
+else
+  for j=1,10 do
+    i.playNote("banjo",10,j)
+    sleep(0.25)
+    i.playNote("banjo",10,j)
+    sleep(0.25)
+  end
+end
