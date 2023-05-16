@@ -1,0 +1,29 @@
+shell.run(".recolor")
+print("Scaning for PNP devices...")
+modem = peripheral.find("modem")
+speeker = peripheral.find("speeker")
+print("Running boot files...")
+if fs.exists("./boot/") then
+  i=fs.list("./boot/")
+  for j=1,#i do
+    shell.run("fg ./boot/"..i[j])
+    sleep(0)
+  end
+end
+term.clear()
+term.setCursorPos(1,1)
+term.setBackgroundColor(colors.black)
+term.clear()
+term.setCursorPos(1,1)
+term.setTextColor(colors.white)
+UserFile = fs.open("./.admin","r")
+User = UserFile.readLine()
+Pronouns = UserFile.readLine()
+print("Welcome",User)
+if modem == nil then
+else
+  rednet.open(peripheral.getName(modem))
+  rednet.broadcast("User "..User.." ("..Pronouns..") just went online!")
+end
+shell.run("cd ./"..User)
+shell.run("ls ./"..User)
