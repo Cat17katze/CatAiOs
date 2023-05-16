@@ -111,7 +111,6 @@ while true do
         print("Is this correct?")
         print("Your name is",Username,"("..Pronouns..")")
         print("You wish to use the palette",pal)
-        print("Also your password is",string.len(password),"chars long")
         print("")
         print("If that is true then please enter 'yes'")
         print("otherwise press enter")
