@@ -123,7 +123,7 @@ while true do
     break
 end
 term.clear()
-term.setCurosrPos(1,1)
+term.setCursorPos(1,1)
 print("Please wait")
 setPal("")
 h=fs.open(".admin","w")
