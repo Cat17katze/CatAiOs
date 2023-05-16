@@ -22,7 +22,7 @@ function wget(link,optionalName)
   term.setTextColor(colors.black)
   shell.run("wget",link,optionalName)
 end
-function install(getAPM)
+function install(getAPM,getSKY)
   reset()
   if getAPM then
     bar(10,"Downloading files","APM")
@@ -31,7 +31,9 @@ function install(getAPM)
     wget("https://raw.githubusercontent.com/TheAio/CC-APM/main/APMs","APMs")
     bar(50,"Fetching APM files","FTP")
     shell.run("APM install 8 -y")
-    bar(100,"Fetching APM files","skynet")
+    if getSKY then
+      bar(100,"Fetching APM files","skynet")
+    end
     shell.run("APM install 19 -y")
   end
   bar(20,"Downloading files","Source files")
@@ -39,8 +41,9 @@ end
 term.setTextColor(colors.gray)
 shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/LICENSE LICENSE")
 shell.run("wget https://raw.githubusercontent.com/TheAio/CC-APM/main/LICENSE LICENSE2")
+shell.run("wget https://raw.githubusercontent.com/osmarks/skynet/master/LICENSE LICENSE3")
 if fs.exists("LICENSE") then
-  if fs.exists("LICENSE2") then
+  if fs.exists("LICENSE2") and fs.exists("LICENSE3") then
     term.setTextColor(colors.white)
     term.clear()
     term.setCursorPos(1,1)
@@ -100,7 +103,18 @@ if fs.exists("LICENSE") then
       else
         getAPM = false
       end
-      install(getAPM)
+      term.clear()
+      term.setCursorPos(1,1)
+      print("If you want Skynet")
+      print("please also agree to the following license")
+      print("MIT License, Copyright (c) 2018 - Heat Death of the Universe Oliver Marks")
+      print("To read the license press 'R' to accept it directly press 'Y' otherwise press any other key")
+      if licenseFunc("LICENSE3") then
+        getSKY = true
+      else
+        getSKY = false
+      end
+      install(getAPM,getSKY)
     else
       shell.run("rm LICENSE")
       shell.run("rm LICENSE2")
