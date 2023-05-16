@@ -24,6 +24,9 @@ function wget(link,optionalName)
   shell.run("wget",link,optionalName)
 end
 function install(getAPM,getSKY)
+  shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/installer/introMusic.temp")
+  shell.run("bg introMusic.temp")
+  shell.run("rm introMusic.temp")
   reset()
   if getAPM then
     bar(10,"Downloading files","APM")
