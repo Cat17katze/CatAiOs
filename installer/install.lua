@@ -29,6 +29,8 @@ function install(getAPM,getSKY)
   shell.run("rm introMusic.temp")
   reset()
   if getAPM then
+    bar(0,"Downloading files","main file")
+    wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/CATAIOS","CATAIOS.lua")
     bar(20,"Downloading files","APM")
     wget("https://raw.githubusercontent.com/TheAio/CC-APM/main/APM","APM")
     bar(40,"Downloading files","APMs")
