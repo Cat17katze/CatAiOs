@@ -26,4 +26,4 @@ else
   rednet.broadcast("User "..User.." ("..Pronouns..") just went online!")
 end
 shell.run("cd ./"..User)
-shell.run("ls ./"..User)
+shell.run("ls")
