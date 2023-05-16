@@ -1,0 +1,5 @@
+term.setPaletteColor(colors.black,"0x000000")
+term.setPaletteColor(colors.white,"0xFFFFFF")
+term.setPaletteColor(colors.red,"0xFF0000")
+term.setPaletteColor(colors.lime,"0x00FF00")
+term.setPaletteColor(colors.blue,"0x0000FF")
