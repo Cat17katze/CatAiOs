@@ -1,4 +1,32 @@
 shell.run(".recolor")
+print("Checking for updates...")
+shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/version.info .temp.temp")
+if fs.exists("./sys/version.info") then
+  i=fs.open("./sys/version.info","r")
+  j=fs.open(".temp.temp","r")
+  if j.readLine() == i.readLine() then
+  else
+    j.close()
+    i.close()
+    print("Update found, updateing...")
+    sleep(1)
+    shell.run("rm ./sys/version.info")
+    sleep(1)
+    shell.run("mv .temp.temp ./sys/version.info")
+    shell.run("rm startup")
+    sleep(1)
+    shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/CATAIOS startup")
+    print("NEW UPDATE INSTALLED, REBOOT TO BEGIN USEING IT")
+    sleep(3)
+  end
+else
+  shell.run("mv .temp.temp ./sys/version.info")
+  shell.run("rm startup")
+  sleep(1)
+  shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/CATAIOS startup")
+  print("NEW UPDATE INSTALLED, REBOOT TO BEGIN USEING IT")
+  sleep(3)
+end
 print("Scaning for PNP devices...")
 modem = peripheral.find("modem")
 speeker = peripheral.find("speeker")
