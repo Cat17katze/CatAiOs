@@ -6,3 +6,5 @@ A special purpose CC:T os for use with redstone and create
 3. agree to the license(es)
 4. fill out the details to create your first account
 5. done!
+### For more information please see the wiki:
+https://github.com/TheAio/CatAiOs/wiki
