@@ -94,11 +94,13 @@ else
 					progCount = loops[#loops]
 				end
 			elseif instruction == "," then
+				sleep(1)
 				tape[pointer] = rs.getAnalougeOutput(args[1])
 				if args[4] == "1" or args[4] == "2" then
 					print("input",tape[pointer])
 				end
 			elseif instruction == "." then
+				sleep(1)
 				rs.setAnalougeOutput(args[1],tape[pointer])
 				if args[4] == "1" or args[4] == "2" then
 					print("output",tape[pointer])
