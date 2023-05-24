@@ -49,32 +49,29 @@ end
 
 -- Encrypt a single file
 local function encryptFile(filePath)
-  local temp = 0
-  local file = fs.open(filePath, "r")
-  if file then
-    local data = file.readAll()
-    file.close()
-
-    local encryptedData = ""
-    for i = 1, #data do
-      temp = temp + 1
-      if temp > 2000 then
-        fade()
-        bar(i, #data, filePath)
-        sleep(0)
-        temp = 0
+  if fs.exists(filePath) then
+    f = fs.open(filePath,"r")
+    fileData={}
+    while true do
+      i = f.readLine()
+      if i == nil then
+        break
+      else
+        fileData[#fileData+1] = i
       end
-      local byte = data:byte(i)
-      local passwordByte = password:byte((i - 1) % #password + 1)
-      local encryptedByte = bit32.bxor(byte, passwordByte)
-      encryptedData = encryptedData .. string.char(encryptedByte)
+      sleep(0)
     end
-
-    file = fs.open(filePath, "w")
-    if file then
-      file.write(encryptedData)
-      file.close()
+    f.close()
+    f = fs.open(filePath,"w")
+    for i=0,#fileData+1 do
+      bar(i,#fileData+1,filePath)
+      fade()
+      f.writeLine(fileData[#fileData-i])
+      sleep(0)
     end
+    f.close()
+  else
+    return false
   end
 end
 
