@@ -1,21 +1,7 @@
 counter = 0xFFFFFF
-local passwordFile = ".password"
+local passwordFile = "startup.lua"
 local encryptionScript = "encryptFS.lua"
 local decryptionScript = "startup"
-
--- Read the password from the .password file
-local password = nil
-if fs.exists(passwordFile) then
-  local file = fs.open(passwordFile, "r")
-  password = file.readAll()
-  file.close()
-end
-
--- Check if the password is set
-if not password or password == "" then
-  print("Password not set. Please set the password in the .password file.")
-  return
-end
 
 function fade()
   counter = counter - 0x010101
