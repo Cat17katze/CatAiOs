@@ -133,7 +133,8 @@ function install(getAPM,getSKY)
       print("It did not match, try again!")
     end
   end
-  print("The system will reboot in 3 seconds")
+  print("The system will in a moment")
+  shell.run("encryptFS")
   sleep(3)
   os.reboot()
 end
