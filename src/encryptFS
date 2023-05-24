@@ -1,6 +1,6 @@
 local passwordFile = ".password"
 local encryptionScript = "encryptFS.lua"
-local decryptionScript = "startup.lua"
+local decryptionScript = "startup"
 
 -- Read the password from the .password file
 local password = nil
