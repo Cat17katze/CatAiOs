@@ -38,9 +38,6 @@ end
 
 -- Encrypt a single file
 local function encryptFile(filePath)
-  if string.sub(filePath,1,3) == "rom" then
-    return true
-  end
   if fs.exists(filePath) then
     f = fs.open(filePath,"r")
     fileData={}
@@ -93,7 +90,7 @@ local function encryptFiles()
     end
   end
 
-  encryptFolder("/")
+  encryptFolder("/secure/")
 end
 
 print("Encrypting file system, this might take a while...")
