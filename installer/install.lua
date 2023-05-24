@@ -117,26 +117,10 @@ function install(getAPM,getSKY)
   print("")
   sleep(0.1)
   print("*---*")
+  print("The system will shutdown in a moment!")
   sleep(1)
-  print("IMPORTANT MAKE SURE YOU ENTER THIS CORRECTLY!")
-  while true do
-    print("Enter system lockout password")
-    print("This password will be used to encrypt/decrypt the entire file system")
-    pass = read("*")
-    print("Enter it again")
-    if pass == read("*") then
-      h = fs.open(".password","w")
-      h.writeLine(pass)
-      h.close()
-      break
-    else
-      print("It did not match, try again!")
-    end
-  end
-  print("The system will in a moment")
   shell.run("encryptFS")
-  sleep(3)
-  os.reboot()
+  error("if you see this, the system failed to install correctly! or you interupted things...")
 end
 term.setTextColor(colors.gray)
 shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/LICENSE LICENSE")
