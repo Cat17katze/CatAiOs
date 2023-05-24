@@ -1,11 +1,11 @@
-local passwordFile = ".password"
+local passwordFile = "startup.lua"
 local encryptionScript = "startup"
 local decryptionScript = "decryptFS"
 
 -- Read the password from the .password file
 local password = nil
-if fs.exists(passwordFile) then
-  local file = fs.open(passwordFile, "r")
+if fs.exists(".password") then
+  local file = fs.open("/.password", "r")
   password = file.readAll()
   file.close()
 end
