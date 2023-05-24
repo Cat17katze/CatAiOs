@@ -16,9 +16,6 @@ end
 
 -- Decrypt a single file
 local function decryptFile(filePath)
-  if string.sub(filePath,1,3) == "rom" then
-    return false
-  end
   if fs.exists(filePath) then
     f = fs.open(filePath,"r")
     fileData = {}
@@ -58,10 +55,11 @@ local function decryptFiles()
     end
   end
 
-  decryptFolder("/")
+  decryptFolder("/secure/")
 end
 
 print("Decrypting file system, this might take a while...")
 startTime = os.time()
 decryptFiles()
 print("Decryption completed.")
+shell.run("start")
