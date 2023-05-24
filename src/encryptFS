@@ -18,6 +18,7 @@ end
 
 -- Encrypt a single file
 local function encryptFile(filePath)
+  local temp = 0
   local file = fs.open(filePath, "r")
   if file then
     local data = file.readAll()
@@ -25,7 +26,11 @@ local function encryptFile(filePath)
 
     local encryptedData = ""
     for i = 1, #data do
-      sleep(0)
+      temp = temp + 1
+      if temp > 2 then
+        sleep(0)
+        temp = 0
+      end
       local byte = data:byte(i)
       local passwordByte = password:byte((i - 1) % #password + 1)
       local encryptedByte = bit32.bxor(byte, passwordByte)
@@ -45,7 +50,8 @@ local function encryptFiles()
   local function encryptFolder(folderPath)
     local files = fs.list(folderPath)
     for _, file in ipairs(files) do
-      sleep(0.5)
+      print("Encrypting",file,"inside",folderPath)
+      sleep(0)
       local filePath = fs.combine(folderPath, file)
       if fs.isDir(filePath) then
         encryptFolder(filePath)
@@ -57,6 +63,6 @@ local function encryptFiles()
 
   encryptFolder("/")
 end
-
+print("encrypting file system, this might take a while...")
 encryptFiles()
 print("Encryption completed.")
