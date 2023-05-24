@@ -21,8 +21,8 @@ function bootAnimation(stage)
   term.setCursorPos(1,1)
   print("CatAiOs is booting...")
   stages = {
-    "+---*\n|CAT|\n| I |\n| OS|\n*---*\n",
-    "*---+\n|CAT|\n| I |\n| OS|\n*---*\n"
+    "*---*\n|CAT|\n| I |\n| OS|\n*---*\n",
+    " --- \n|CAT|\n| I |\n| OS|\n --- \n"
   }
   print(stages[stage])
   print("Time elapsed:",os.time()-startTime)
@@ -34,6 +34,7 @@ local function decryptFile(filePath)
     f = fs.open(filePath,"r")
     fileData = {}
     while true do
+      sleep(0)
       bootAnimation(1)
       i = f.readLine()
       if i == nil then
@@ -46,7 +47,8 @@ local function decryptFile(filePath)
     f = fs.open(filePath,"w")
     for i=0,#fileData+1 do
       bootAnimation(2)
-      f.writeLine(fileData[#fileData-i]
+      f.writeLine(fileData[#fileData-i])
+      sleep(0)
     end
     f.close()
   end
