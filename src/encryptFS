@@ -1,0 +1,61 @@
+local passwordFile = ".password"
+local encryptionScript = "startup"
+local decryptionScript = "decryptFS"
+
+-- Read the password from the .password file
+local password = nil
+if fs.exists(passwordFile) then
+  local file = fs.open(passwordFile, "r")
+  password = file.readAll()
+  file.close()
+end
+
+-- Check if the password is set
+if not password or password == "" then
+  print("Password not set. Please set the password in the .password file.")
+  return
+end
+
+-- Encrypt a single file
+local function encryptFile(filePath)
+  local file = fs.open(filePath, "r")
+  if file then
+    local data = file.readAll()
+    file.close()
+
+    local encryptedData = ""
+    for i = 1, #data do
+      local byte = data:byte(i)
+      local passwordByte = password:byte((i - 1) % #password + 1)
+      local encryptedByte = bit32.bxor(byte, passwordByte)
+      encryptedData = encryptedData .. string.char(encryptedByte)
+    end
+
+    file = fs.open(filePath, "w")
+    if file then
+      file.write(encryptedData)
+      file.close()
+    end
+  end
+end
+
+-- Encrypt all files in the file system except itself, the .password file, and the encryption and decryption scripts
+local function encryptFiles()
+  local function encryptFolder(folderPath)
+    local files = fs.list(folderPath)
+    for _, file in ipairs(files) do
+      local filePath = fs.combine(folderPath, file)
+      if fs.isDir(filePath) then
+        encryptFolder(filePath)
+      elseif filePath ~= shell.getRunningProgram() and filePath ~= passwordFile and filePath ~= encryptionScript and filePath ~= decryptionScript then
+        encryptFile(filePath)
+      end
+    end
+  end
+
+  encryptFolder("/")
+end
+
+encryptFiles()
+print("Encryption completed.")
+shell.run("start")
