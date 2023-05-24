@@ -1,11 +1,11 @@
-local passwordFile = "startup.lua"
-local encryptionScript = "encryptFS"
-local decryptionScript = "startup"
+local passwordFile = ".password"
+local encryptionScript = "encryptFS.lua"
+local decryptionScript = "startup.lua"
 
 -- Read the password from the .password file
 local password = nil
-if fs.exists(".password") then
-  local file = fs.open("/.password", "r")
+if fs.exists(passwordFile) then
+  local file = fs.open(passwordFile, "r")
   password = file.readAll()
   file.close()
 end
@@ -16,14 +16,14 @@ if not password or password == "" then
   return
 end
 
-function bar(p,t,f)
-    term.clear()
-    term.setCursorPos(1,1)
-    print("Encrypting",f)
-    print(string.rep("_",20))
-    term.setCursorPos(1,2)
-    print(string.rep("#",(p/t)*20))
-    print((p/t)*100)
+function bar(p, t, f)
+  term.clear()
+  term.setCursorPos(1, 1)
+  print("Encrypting", f)
+  print(string.rep("_", 20))
+  term.setCursorPos(1, 2)
+  print(string.rep("#", (p / t) * 20))
+  print((p / t) * 100)
 end
 
 -- Encrypt a single file
@@ -38,7 +38,7 @@ local function encryptFile(filePath)
     for i = 1, #data do
       temp = temp + 1
       if temp > 2000 then
-        bar(i,#data,filePath)
+        bar(i, #data, filePath)
         sleep(0)
         temp = 0
       end
@@ -61,7 +61,7 @@ local function encryptFiles()
   local function encryptFolder(folderPath)
     local files = fs.list(folderPath)
     for _, file in ipairs(files) do
-      print("Encrypting",file,"inside",folderPath)
+      print("Encrypting", file, "inside", folderPath)
       sleep(0)
       local filePath = fs.combine(folderPath, file)
       if fs.isDir(filePath) then
@@ -74,6 +74,7 @@ local function encryptFiles()
 
   encryptFolder("/")
 end
-print("encrypting file system, this might take a while...")
+
+print("Encrypting file system, this might take a while...")
 encryptFiles()
 print("Encryption completed.")
