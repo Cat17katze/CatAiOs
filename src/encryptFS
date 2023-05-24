@@ -16,6 +16,16 @@ if not password or password == "" then
   return
 end
 
+function bar(p,t,f)
+    term.clear()
+    term.setCursorPos(1,1)
+    print("Encrypting",f)
+    print(string.rep("_",20))
+    term.setCursorPos(1,2)
+    print(string.rep("#",(p/t)*20))
+    print((p/t)*100)
+end
+
 -- Encrypt a single file
 local function encryptFile(filePath)
   local temp = 0
@@ -26,8 +36,9 @@ local function encryptFile(filePath)
 
     local encryptedData = ""
     for i = 1, #data do
+      bar(i,#data,filePath)
       temp = temp + 1
-      if temp > 2 then
+      if temp > 20 then
         sleep(0)
         temp = 0
       end
