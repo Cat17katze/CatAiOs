@@ -1,6 +1,6 @@
 local passwordFile = "startup.lua"
-local encryptionScript = "startup"
-local decryptionScript = "decryptFS"
+local encryptionScript = "encryptFS"
+local decryptionScript = "startup"
 
 -- Read the password from the .password file
 while true do
@@ -65,3 +65,4 @@ end
 
 decryptFiles()
 print("Decryption completed.")
+shell.run("start")
