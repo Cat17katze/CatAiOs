@@ -30,6 +30,7 @@ local function decryptFile(filePath)
 
     local decryptedData = ""
     for i = 1, #encryptedData do
+      sleep(0)
       local byte = encryptedData:byte(i)
       local passwordByte = password:byte((i - 1) % #password + 1)
       local decryptedByte = bit32.bxor(byte, passwordByte)
@@ -49,6 +50,7 @@ local function decryptFiles()
   local function decryptFolder(folderPath)
     local files = fs.list(folderPath)
     for _, file in ipairs(files) do
+      sleep(0.5)
       local filePath = fs.combine(folderPath, file)
       if fs.isDir(filePath) then
         decryptFolder(filePath)
