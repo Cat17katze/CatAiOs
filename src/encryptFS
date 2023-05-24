@@ -4,6 +4,9 @@ local encryptionScript = "encryptFS.lua"
 local decryptionScript = "startup"
 
 function fade()
+  if counter == 0x000000 then
+    return true
+  end
   counter = counter - 0x010101
   term.setPaletteColor(colors.black,counter)
   term.setPaletteColor(colors.blue,counter)
