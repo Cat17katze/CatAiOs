@@ -1,0 +1,65 @@
+local passwordFile = "startup.lua"
+local encryptionScript = "startup"
+local decryptionScript = "decryptFS"
+
+-- Read the password from the .password file
+while true do
+  print("Enter the system password")
+  local password = read("*")
+  print("Enter it again")
+  if password == read("*") then
+    break
+  else
+    print("the passwords dont match")
+  end
+end
+-- Check if the password is set
+if not password or password == "" then
+  print("Uhoh, it seems that your entire system has been bricked!")
+  print("We are sorry about that")
+  print("Hope you got backups!")
+  return
+end
+
+-- Decrypt a single file
+local function decryptFile(filePath)
+  local file = fs.open(filePath, "r")
+  if file then
+    local encryptedData = file.readAll()
+    file.close()
+
+    local decryptedData = ""
+    for i = 1, #encryptedData do
+      local byte = encryptedData:byte(i)
+      local passwordByte = password:byte((i - 1) % #password + 1)
+      local decryptedByte = bit32.bxor(byte, passwordByte)
+      decryptedData = decryptedData .. string.char(decryptedByte)
+    end
+
+    file = fs.open(filePath, "w")
+    if file then
+      file.write(decryptedData)
+      file.close()
+    end
+  end
+end
+
+-- Decrypt all files in the file system except itself, the .password file, and the encryption and decryption scripts
+local function decryptFiles()
+  local function decryptFolder(folderPath)
+    local files = fs.list(folderPath)
+    for _, file in ipairs(files) do
+      local filePath = fs.combine(folderPath, file)
+      if fs.isDir(filePath) then
+        decryptFolder(filePath)
+      elseif filePath ~= shell.getRunningProgram() and filePath ~= passwordFile and filePath ~= encryptionScript and filePath ~= decryptionScript then
+        decryptFile(filePath)
+      end
+    end
+  end
+
+  decryptFolder("/")
+end
+
+decryptFiles()
+print("Decryption completed.")
