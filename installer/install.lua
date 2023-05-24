@@ -27,7 +27,7 @@ function wget(link,optionalName)
   shell.run("wget",link,optionalName)
 end
 function install(getAPM,getSKY)
-  items=13
+  items=15
   startInstall = os.time()
   shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/installer/introMusic.temp")
   delay = os.time() - startInstall
@@ -61,7 +61,7 @@ function install(getAPM,getSKY)
   wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/LuaDebugger.lua",".LuaDebugger")
   bar((7/items)*100,"Downloading files","Source files")
   eta(items,8,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/installer/OOTB.temp.lua","startup")
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/installer/OOTB.temp.lua","start")
   bar((8/items)*100,"Downloading files","Small Source files")
   eta(items,9,delay)
   wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/about.lua","about")
@@ -73,6 +73,9 @@ function install(getAPM,getSKY)
   eta(items,12,delay)
   wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/recolor.lua",".recolor")
   eta(items,13,delay)
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/encryptFS","encryptFS")
+  eta(items,14,delay)
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/startup","startup")
   if getSKY then
     bar(25,"Configuring system","Skynet")
     shell.run("skynet")
@@ -115,6 +118,21 @@ function install(getAPM,getSKY)
   sleep(0.1)
   print("*---*")
   sleep(1)
+  print("IMPORTANT MAKE SURE YOU ENTER THIS CORRECTLY!")
+  while true do
+    print("Enter system lockout password")
+    print("This password will be used to encrypt/decrypt the entire file system")
+    pass = read("*")
+    print("Enter it again")
+    if pass == read("*") then
+      h = fs.open(".password","w")
+      h.writeLine(pass)
+      h.close()
+      break
+    else
+      print("It did not match, try again!")
+    end
+  end
   print("The system will reboot in 3 seconds")
   sleep(3)
   os.reboot()
