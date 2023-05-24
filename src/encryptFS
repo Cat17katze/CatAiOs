@@ -1,3 +1,4 @@
+counter = 0xFFFFFF
 local passwordFile = ".password"
 local encryptionScript = "encryptFS.lua"
 local decryptionScript = "startup"
@@ -14,6 +15,26 @@ end
 if not password or password == "" then
   print("Password not set. Please set the password in the .password file.")
   return
+end
+
+function fade()
+  counter = counter - 1
+  term.setPaletteColor(colors.black,counter)
+  term.setPaletteColor(colors.blue,counter)
+  term.setPaletteColor(colors.brown,counter)
+  term.setPaletteColor(colors.cyan,counter)
+  term.setPaletteColor(colors.gray,counter)
+  term.setPaletteColor(colors.green,counter)
+  term.setPaletteColor(colors.lightBlue,counter)
+  term.setPaletteColor(colors.lightGray,counter)
+  term.setPaletteColor(colors.lime,counter)
+  term.setPaletteColor(colors.magenta,counter)
+  term.setPaletteColor(colors.orange,counter)
+  term.setPaletteColor(colors.pink,counter)
+  term.setPaletteColor(colors.purple,counter)
+  term.setPaletteColor(colors.red,counter)
+  term.setPaletteColor(colors.white,counter)
+  term.setPaletteColor(colors.yellow,counter)
 end
 
 function bar(p, t, f)
@@ -38,6 +59,7 @@ local function encryptFile(filePath)
     for i = 1, #data do
       temp = temp + 1
       if temp > 2000 then
+        fade()
         bar(i, #data, filePath)
         sleep(0)
         temp = 0
@@ -78,3 +100,21 @@ end
 print("Encrypting file system, this might take a while...")
 encryptFiles()
 print("Encryption completed.")
+counter = 0
+term.setPaletteColor(colors.black,counter)
+term.setPaletteColor(colors.blue,counter)
+term.setPaletteColor(colors.brown,counter)
+term.setPaletteColor(colors.cyan,counter)
+term.setPaletteColor(colors.gray,counter)
+term.setPaletteColor(colors.green,counter)
+term.setPaletteColor(colors.lightBlue,counter)
+term.setPaletteColor(colors.lightGray,counter)
+term.setPaletteColor(colors.lime,counter)
+term.setPaletteColor(colors.magenta,counter)
+term.setPaletteColor(colors.orange,counter)
+term.setPaletteColor(colors.pink,counter)
+term.setPaletteColor(colors.purple,counter)
+term.setPaletteColor(colors.red,counter)
+term.setPaletteColor(colors.white,counter)
+term.setPaletteColor(colors.yellow,counter)
+os.shutdown()
