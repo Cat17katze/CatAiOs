@@ -36,9 +36,9 @@ local function encryptFile(filePath)
 
     local encryptedData = ""
     for i = 1, #data do
-      bar(i,#data,filePath)
       temp = temp + 1
-      if temp > 20 then
+      if temp > 2000 then
+        bar(i,#data,filePath)
         sleep(0)
         temp = 0
       end
