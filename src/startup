@@ -18,13 +18,11 @@ end
 
 function bootAnimation(stage)
   term.clear()
-  term.setCursorPos(1, 1)
+  term.setCursorPos(1,1)
   print("CatAiOs is booting...")
   stages = {
     "+---*\n|CAT|\n| I |\n| OS|\n*---*\n",
-    "*---+\n|CAT|\n| I |\n| OS|\n*---*\n",
-    "*---*\n|CAT|\n| I |\n| OS|\n*---+\n",
-    "*---*\n|CAT|\n| I |\n| OS|\n+---*\n"
+    "*---+\n|CAT|\n| I |\n| OS|\n*---*\n"
   }
   print(stages[stage])
   print("Time elapsed:",os.time()-startTime)
@@ -32,41 +30,25 @@ end
 
 -- Decrypt a single file
 local function decryptFile(filePath)
-  local file = fs.open(filePath, "r")
-  if file then
-    local encryptedData = file.readAll()
-    file.close()
-
-    local decryptedData = ""
-    local temp = 0
-    local tempb = 0
-    local tempc = 0
-    for i = 1, #encryptedData do
-      temp = temp + 1
-      if temp > 2000 then
-        sleep(0)
-        temp = 0
-        tempb = tempb + 1
-        if tempb > 2 then
-          tempb = 0
-          tempc = tempc + 1
-          bootAnimation(tempc)
-          if tempc == 4 then
-            tempc = 0
-          end
-        end
+  if fs.exists(filePath) then
+    f = fs.open(filePath,"r")
+    fileData = {}
+    while true do
+      bootAnimation(1)
+      i = f.readLine()
+      if i == nil then
+        break
+      else
+        fileData[#fileData+1] = i
       end
-      local byte = encryptedData:byte(i)
-      local passwordByte = password:byte((i - 1) % #password + 1)
-      local decryptedByte = bit32.bxor(byte, passwordByte)
-      decryptedData = decryptedData .. string.char(decryptedByte)
     end
-
-    file = fs.open(filePath, "w")
-    if file then
-      file.write(decryptedData)
-      file.close()
+    f.close()
+    f = fs.open(filePath,"w")
+    for i=0,#fileData+1 do
+      bootAnimation(2)
+      f.writeLine(fileData[#fileData-i]
     end
+    f.close()
   end
 end
 
@@ -75,7 +57,6 @@ local function decryptFiles()
   local function decryptFolder(folderPath)
     local files = fs.list(folderPath)
     for _, file in ipairs(files) do
-      print("Decrypting", file, "inside", folderPath)
       sleep(0)
       local filePath = fs.combine(folderPath, file)
       if fs.isDir(filePath) then
