@@ -1,6 +1,6 @@
 local passwordFile = "startup.lua"
-local encryptionScript = "startup"
-local decryptionScript = "decryptFS"
+local encryptionScript = "encryptFS"
+local decryptionScript = "startup"
 
 -- Read the password from the .password file
 local password = nil
@@ -60,4 +60,3 @@ end
 
 encryptFiles()
 print("Encryption completed.")
-shell.run("start")
