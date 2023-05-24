@@ -29,8 +29,12 @@ local function decryptFile(filePath)
     file.close()
 
     local decryptedData = ""
+    local temp = 0
     for i = 1, #encryptedData do
-      sleep(0)
+      if temp > 2 then
+        sleep(0)
+        temp = 0
+      end
       local byte = encryptedData:byte(i)
       local passwordByte = password:byte((i - 1) % #password + 1)
       local decryptedByte = bit32.bxor(byte, passwordByte)
@@ -63,6 +67,7 @@ local function decryptFiles()
   decryptFolder("/")
 end
 
+print("Decrypting file system, this might take a while...")
 decryptFiles()
 print("Decryption completed.")
 shell.run("start")
