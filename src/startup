@@ -21,12 +21,13 @@ function bootAnimation(stage)
   term.setCursorPos(1, 1)
   print("CatAiOs is booting...")
   stages = {
-    "*---*\n|CAT|\n| I |\n| OS|\n[#  ]",
-    "*---*\n|CAT|\n| I |\n| OS|\n[## ]",
-    "*---*\n|CAT|\n| I |\n| OS|\n[###]"
+    "+---*\n|CAT|\n| I |\n| OS|\n*---*\n",
+    "*---+\n|CAT|\n| I |\n| OS|\n*---*\n",
+    "*---*\n|CAT|\n| I |\n| OS|\n*---+\n",
+    "*---*\n|CAT|\n| I |\n| OS|\n+---*\n"
   }
-  print(stages[stage + 1])
-  sleep(0.5)
+  print(stages[stage])
+  print("Time elapsed:",os.time()-startTime)
 end
 
 -- Decrypt a single file
@@ -46,11 +47,11 @@ local function decryptFile(filePath)
         sleep(0)
         temp = 0
         tempb = tempb + 1
-        if tempb > 3 then
+        if tempb > 2 then
           tempb = 0
           tempc = tempc + 1
           bootAnimation(tempc)
-          if tempc == 3 then
+          if tempc == 4 then
             tempc = 0
           end
         end
@@ -89,5 +90,6 @@ local function decryptFiles()
 end
 
 print("Decrypting file system, this might take a while...")
+startTime = os.time()
 decryptFiles()
 print("Decryption completed.")
