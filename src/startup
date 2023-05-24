@@ -11,11 +11,14 @@ function bootAnimation(stage)
     " --- \n|CAT|\n| I |\n| OS|\n --- \n"
   }
   print(stages[stage])
-  print("Time elapsed:",os.time()-startTime)
+  print("Time elapsed:",(os.time()-startTime)*100)
 end
 
 -- Decrypt a single file
 local function decryptFile(filePath)
+  if string.sub(filePath,1,3) == "rom" then
+    return false
+  end
   if fs.exists(filePath) then
     f = fs.open(filePath,"r")
     fileData = {}
