@@ -1,29 +1,32 @@
-local passwordFile = "startup.lua"
-local encryptionScript = "encryptFS"
-local decryptionScript = "startup"
+local passwordFile = ".password"
+local encryptionScript = "encryptFS.lua"
+local decryptionScript = "startup.lua"
+
+-- Read the password from the .password file
+local password = nil
+if fs.exists(passwordFile) then
+  local file = fs.open(passwordFile, "r")
+  password = file.readAll()
+  file.close()
+end
+
+-- Check if the password is set
+if not password or password == "" then
+  print("Password not set. Please set the password in the .password file.")
+  return
+end
 
 function bootAnimation(stage)
   term.clear()
-  term.setCursorPos(1,1)
+  term.setCursorPos(1, 1)
   print("CatAiOs is booting...")
   stages = {
-  "*---*\n|CAT|\n| I |\n| OS|\n[#  ]",
-  "*---*\n|CAT|\n| I |\n| OS|\n[ # ]",
-  "*---*\n|CAT|\n| I |\n| OS|\n[  #]"
+    "*---*\n|CAT|\n| I |\n| OS|\n[#  ]",
+    "*---*\n|CAT|\n| I |\n| OS|\n[## ]",
+    "*---*\n|CAT|\n| I |\n| OS|\n[###]"
   }
-  print(stages[stage])
-end
-
--- Read the password from the .password file
-while true do
-  print("Enter the system password")
-  password = read("*")
-  print("Enter it again")
-  if password == read("*") then
-    break
-  else
-    print("the passwords dont match")
-  end
+  print(stages[stage + 1])
+  sleep(0.5)
 end
 
 -- Decrypt a single file
@@ -71,7 +74,8 @@ local function decryptFiles()
   local function decryptFolder(folderPath)
     local files = fs.list(folderPath)
     for _, file in ipairs(files) do
-      sleep(0.5)
+      print("Decrypting", file, "inside", folderPath)
+      sleep(0)
       local filePath = fs.combine(folderPath, file)
       if fs.isDir(filePath) then
         decryptFolder(filePath)
@@ -87,4 +91,3 @@ end
 print("Decrypting file system, this might take a while...")
 decryptFiles()
 print("Decryption completed.")
-shell.run("start")
