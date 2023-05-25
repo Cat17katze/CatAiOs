@@ -27,7 +27,7 @@ function wget(link,optionalName)
   shell.run("wget",link,optionalName)
 end
 function install(getAPM,getSKY)
-  items=15
+  items=17
   startInstall = os.time()
   shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/installer/introMusic.temp")
   delay = os.time() - startInstall
@@ -70,12 +70,15 @@ function install(getAPM,getSKY)
   bar((11/items)*100,"Downloading files","Small Source files")
   eta(items,11,delay)
   wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/example.bf","example.bf")
-  eta(items,12,delay)
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/example.sh","example.sh") --FIX SOURCE
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/echo","echo") --FIX SOURCE
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/ShellRun.lua","ShellRun") --FIX SOURCE
+  eta(items,15,delay)
   wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/recolor.lua",".recolor")
-  eta(items,13,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/encryptFS","encryptFS")
-  eta(items,14,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/startup","startup")
+  eta(items,16,delay)
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/encryptFS","encryptFS") --FIX SOURCE
+  eta(items,17,delay)
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/startup","startup") --FIX SOURCE
   if getSKY then
     bar(25,"Configuring system","Skynet")
     shell.run("skynet")
