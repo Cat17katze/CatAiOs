@@ -1,0 +1,65 @@
+local passwordFile = "startup.lua"
+local encryptionScript = "encryptFS.lua"
+local decryptionScript = "startup.lua"
+
+function bootAnimation(stage)
+  term.clear()
+  term.setCursorPos(1,1)
+  print("CatAiOs is booting...")
+  stages = {
+    "*---*\n|CAT|\n| I |\n| OS|\n*---*\n",
+    " --- \n|CAT|\n| I |\n| OS|\n --- \n"
+  }
+  print(stages[stage])
+  print("Time elapsed:",(os.time()-startTime)*100)
+end
+
+-- Decrypt a single file
+local function decryptFile(filePath)
+  if fs.exists(filePath) then
+    f = fs.open(filePath,"r")
+    fileData = {}
+    while true do
+      sleep(0)
+      bootAnimation(1)
+      i = f.readLine()
+      if i == nil then
+        break
+      else
+        fileData[#fileData+1] = i
+      end
+    end
+    f.close()
+    f = fs.open(filePath,"w")
+    for i=0,#fileData+1 do
+      bootAnimation(2)
+      f.writeLine(fileData[#fileData-i])
+      sleep(0)
+    end
+    f.close()
+  end
+end
+
+-- Decrypt all files in the file system except itself, the .password file, and the encryption and decryption scripts
+local function decryptFiles()
+  local function decryptFolder(folderPath)
+    local files = fs.list(folderPath)
+    for _, file in ipairs(files) do
+      sleep(0)
+      local filePath = fs.combine(folderPath, file)
+      if fs.isDir(filePath) then
+        decryptFolder(filePath)
+      elseif filePath ~= shell.getRunningProgram() and filePath ~= passwordFile and filePath ~= encryptionScript and filePath ~= decryptionScript then
+        decryptFile(filePath)
+      end
+    end
+  end
+
+  decryptFolder("/secure/")
+end
+
+print("Decrypting file system, this might take a while...")
+startTime = os.time()
+decryptFiles()
+print("Decryption completed.")
+shell.run("start")

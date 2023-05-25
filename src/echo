@@ -1,0 +1,6 @@
+args = {...}
+arg = ""
+for i=1,#args do
+  arg = arg..args[i]
+end
+print(arg)

@@ -1,0 +1,116 @@
+counter = 0xFFFFFF
+local passwordFile = "startup.lua"
+local encryptionScript = "encryptFS.lua"
+local decryptionScript = "startup"
+
+function fade()
+  if counter == 0xFFFFFF then
+    return true
+  end
+  counter = counter + 0x010101
+  term.setPaletteColor(colors.black,colors.black/counter)
+  term.setPaletteColor(colors.blue,colors.blue/counter)
+  term.setPaletteColor(colors.brown,colors.brown/counter)
+  term.setPaletteColor(colors.cyan,colors.cyan/counter)
+  term.setPaletteColor(colors.gray,colors.gray/counter)
+  term.setPaletteColor(colors.green,colors.green/counter)
+  term.setPaletteColor(colors.lightBlue,colors.lightBlue/counter)
+  term.setPaletteColor(colors.lightGray,colors.lightGray/counter)
+  term.setPaletteColor(colors.lime,colors.lime/counter)
+  term.setPaletteColor(colors.magenta,colors.magenta/counter)
+  term.setPaletteColor(colors.orange,colors.orange/counter)
+  term.setPaletteColor(colors.pink,colors.pink/counter)
+  term.setPaletteColor(colors.purple,colors.purple/counter)
+  term.setPaletteColor(colors.red,colors.red/counter)
+  term.setPaletteColor(colors.white,colors.white/counter)
+  term.setPaletteColor(colors.yellow,colors.yellow/counter)
+end
+
+function bar(p, t, f)
+  term.clear()
+  term.setCursorPos(1, 1)
+  print("Powering down")
+  print(string.rep("_", 20))
+  term.setCursorPos(1, 2)
+  print(string.rep("#", (p / t) * 20))
+  print((p / t) * 100)
+end
+
+-- Encrypt a single file
+local function encryptFile(filePath)
+  if fs.exists(filePath) then
+    f = fs.open(filePath,"r")
+    fileData={}
+    while true do
+      i = f.readLine()
+      if i == nil then
+        break
+      else
+        fileData[#fileData+1] = i
+      end
+      sleep(0)
+    end
+    f.close()
+    f = fs.open(filePath,"w")
+    fadeTimer=0
+    c=0
+    for i=0,#fileData+1 do
+      c=c+1
+      bar(i,#fileData+1,filePath)
+      fadeTimer=fadeTimer+1
+      if fadeTimer == 10 then
+        fade()
+        fadeTimer = 0
+      end
+      f.writeLine(fileData[#fileData-i])
+      if c==25 then
+        sleep(0)
+        c=0
+      end
+    end
+    f.close()
+  else
+    return false
+  end
+end
+
+-- Encrypt all files in the file system except itself, the .password file, and the encryption and decryption scripts
+local function encryptFiles()
+  local function encryptFolder(folderPath)
+    local files = fs.list(folderPath)
+    for _, file in ipairs(files) do
+      print("Encrypting", file, "inside", folderPath)
+      sleep(0)
+      local filePath = fs.combine(folderPath, file)
+      if fs.isDir(filePath) then
+        encryptFolder(filePath)
+      elseif filePath ~= shell.getRunningProgram() and filePath ~= passwordFile and filePath ~= encryptionScript and filePath ~= decryptionScript then
+        encryptFile(filePath)
+      end
+    end
+  end
+
+  encryptFolder("/secure/")
+end
+
+print("Encrypting file system, this might take a while...")
+encryptFiles()
+print("Encryption completed.")
+counter = 0
+term.setPaletteColor(colors.black,counter)
+term.setPaletteColor(colors.blue,counter)
+term.setPaletteColor(colors.brown,counter)
+term.setPaletteColor(colors.cyan,counter)
+term.setPaletteColor(colors.gray,counter)
+term.setPaletteColor(colors.green,counter)
+term.setPaletteColor(colors.lightBlue,counter)
+term.setPaletteColor(colors.lightGray,counter)
+term.setPaletteColor(colors.lime,counter)
+term.setPaletteColor(colors.magenta,counter)
+term.setPaletteColor(colors.orange,counter)
+term.setPaletteColor(colors.pink,counter)
+term.setPaletteColor(colors.purple,counter)
+term.setPaletteColor(colors.red,counter)
+term.setPaletteColor(colors.white,counter)
+term.setPaletteColor(colors.yellow,counter)
+os.shutdown()
