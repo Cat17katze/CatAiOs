@@ -70,15 +70,15 @@ function install(getAPM,getSKY)
   bar((11/items)*100,"Downloading files","Small Source files")
   eta(items,11,delay)
   wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/example.bf","example.bf")
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/example.sh","example.sh") --FIX SOURCE
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/echo","echo") --FIX SOURCE
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/ShellRun.lua","ShellRun") --FIX SOURCE
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/example.sh","example.sh")
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/echo","echo")
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/ShellRun.lua","ShellRun")
   eta(items,15,delay)
   wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/recolor.lua",".recolor")
   eta(items,16,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/encryptFS","encryptFS") --FIX SOURCE
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/encryptFS","encryptFS")
   eta(items,17,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/TheAio-GPT_ASSISTED_DEVELOPMENT/src/startup","startup") --FIX SOURCE
+  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/startup","startup")
   if getSKY then
     bar(25,"Configuring system","Skynet")
     shell.run("skynet")
