@@ -1,0 +1,33 @@
+shell.run(".recolor")
+function reset()
+  term.setBackgroundColor(colors.black)
+  term.setCursorPos(1,1)
+  term.clear()
+end
+function play(URL)
+  shell.run("fg youcube",URL)
+  stalled=true
+  while true do
+    sleep(0)
+    if stalled then
+      term.setCursorPos(1,1)
+      print("Download stalled, please wait a while...")
+    end
+    A,B,C=os.pullEvent()
+    if A == "speaker_audio_empty" then
+      break
+    end
+    if #C == 2 then
+      if C[1] == '"action": "status"' then
+        term.setCursorPos(1,1)
+        print(C[2])
+        stalled = false
+      end
+  end
+  term.setCursorPos(1,1)
+  print("Media is now playing!")
+end
+reset()
+print("Enter URL")
+reset()
+play(read())
