@@ -33,18 +33,6 @@ shell.run("about")
 term.clear()
 while true do
     term.setCursorPos(1,1)
-    print("Please enter a master password")
-    i=read("*")
-    print("Please enter the password again")
-    if i == read("*") then
-        break
-    else
-        print("The password do not match!")
-    end
-end
-Password = i
-while true do
-    term.setCursorPos(1,1)
     term.clear()
     print("Please enter your username")
     Username=read()
@@ -117,7 +105,44 @@ while true do
         if string.upper(read()) == "YES" then
             break
         else
-            os.reboot()
+            term.setCursorPos(1,1)
+            term.clear()
+            print("Ok, we are almost done",Username)
+            local NetList = peripheral.getNames()
+            speakers={}
+            for i=1,#NetList do
+                if peripheral.getType(NetList[i]) == "speaker" then
+                    speakers[#speakers+1] = peripheral.wrap(NetList[i])
+                end
+            end
+            if speakers == 0 then
+                if peripheral.find("speaker") == nil then
+                    os.reboot()
+                else
+                    print("We found some speakers, would you like to download some")
+                    print("music and video related software? [Y/n]")
+                    E,K=os.pullEvent("key")
+                    if K == keys.y then
+                        print("Installing extra software...")
+                        shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/media/DEMO.mm")
+                        shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/src/play.lua")
+                        shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/src/MME.lua")
+                        shell.run("wget run https://raw.githubusercontent.com/CC-YouCube/installer/main/src/installer.lua")
+                    end
+                    os.reboot()
+                end
+            else
+                print("We found some speakers, would you like to download some")
+                print("music and video related software? [Y/n]")
+                E,K=os.pullEvent("key")
+                if K == keys.y then
+                    print("Installing extra software...")
+                    shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/media/DEMO.mm")
+                    shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/src/play.lua")
+                    shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/src/MME.lua")
+                    shell.run("wget run https://raw.githubusercontent.com/CC-YouCube/installer/main/src/installer.lua")
+                end
+            end
         end
     end
     break
