@@ -1,0 +1,15 @@
+function Safe()
+  if multishell.getCount() > 1 then
+    print("Software is still running, continuing in 5 seconds anyways")
+    os.queueEvent("SHUTDOWN",5)
+    sleep(5)
+  else
+    os.queueEvent("SHUTDOWN",0)
+  end
+  shell.run("encryptFS")
+end
+shell.run("/.recolor")
+Safe()
+term.setBackgroundColor(colors.black)
+term.clear()
+os.shutdown()
