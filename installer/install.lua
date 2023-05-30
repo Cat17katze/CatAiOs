@@ -1,3 +1,4 @@
+----
 function eta(todo,done,delay)
   speed=delay/done
   print("ETA:",(speed*todo)*1000)
