@@ -60,9 +60,10 @@ function install(getAPM,getSKY)
             print("Are you sure you linked the raw page (no html)?")
           else
             print("Are you sure you included the last '/' in the link? (for example '..."..string.sub(build,string.len(build)-2,string.len(build)).."/)")
+          end
         end
-      end
-      break
+     end
+     break
   end
   items=5
   startInstall = os.time()
