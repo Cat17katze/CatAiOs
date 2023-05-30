@@ -40,7 +40,7 @@ function install(getAPM,getSKY)
       build="https://raw.githubusercontent.com/TheAio/CatAiOs/main/"
       break
     elseif K == keys.e then
-      build="https://raw.githubusercontent.com/TheAio/CatAiOs/experimental/"
+      build="https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/"
       break
     elseif K == keys.c then
       print("Custom builds are linked similarly to the following example:")
