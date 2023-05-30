@@ -5,6 +5,8 @@ if fs.exists("./sys/version.info") then
   i=fs.open("./sys/version.info","r")
   j=fs.open(".temp.temp","r")
   if j.readLine() == i.readLine() then
+    j.close()
+    i.close()
   else
     j.close()
     i.close()
@@ -13,10 +15,16 @@ if fs.exists("./sys/version.info") then
     shell.run("rm ./sys/version.info")
     sleep(1)
     shell.run("mv .temp.temp ./sys/version.info")
-    shell.run("rm startup")
+    shell.run("mv startup .temp.temp")
     sleep(1)
     shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/CATAIOS startup")
-    print("NEW UPDATE INSTALLED, REBOOT TO BEGIN USEING IT")
+    if fs.exists("startup") then
+      shell.run("rm .temp.temp")
+      print("NEW UPDATE INSTALLED, REBOOT TO BEGIN USEING IT!")
+    else
+      shell.run("mv .temp.temp startup")
+      print("NEW UPDATE FAILED TO INSTALL!")
+    end
     sleep(3)
   end
 else
@@ -24,12 +32,44 @@ else
   shell.run("rm startup")
   sleep(1)
   shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/CATAIOS startup")
-  print("NEW UPDATE INSTALLED, REBOOT TO BEGIN USEING IT")
+  print("STARTUP FILE INSTALLED OR UPDATED, REBOOT TO BEGIN USEING IT")
   sleep(3)
 end
-print("Scaning for PNP devices...")
-modem = peripheral.find("modem")
-speeker = peripheral.find("speeker")
+function DetectPNP()
+  print("Scaning for PNP devices...")
+  local NetList = peripheral.getNames()
+  speakers={}
+  for i=1,#NetList do
+      if peripheral.getType(NetList[i]) == "speaker" then
+          speakers[#speakers+1] = peripheral.wrap(NetList[i])
+      end
+      sleep(0)
+  end
+  if #speakers == 0 then
+      speakers[1] = peripheral.find("speaker")
+  end
+  monitors={}
+  for i=1,#NetList do
+      if peripheral.getType(NetList[i]) == "monitor" then
+          monitors[#monitors+1] = peripheral.wrap(NetList[i])
+      end
+      sleep(0)
+  end
+  if #speakers == 0 then
+      monitors[1] = peripheral.find("monitor")
+  end
+  modems={}
+  for i=1,#NetList do
+      if peripheral.getType(NetList[i]) == "modem" then
+          modems[#modems+1] = peripheral.wrap(NetList[i])
+      end
+      sleep(0)
+  end
+  if #modems == 0 then
+      modems[1] = peripheral.find("modem")
+  end
+end
+DetectPNP()
 print("Running boot files...")
 if fs.exists("./boot/") then
   i=fs.list("./boot/")
@@ -37,6 +77,8 @@ if fs.exists("./boot/") then
     shell.run("fg ./boot/"..i[j])
     sleep(0)
   end
+else
+  shell.run("mkdir /boot/")
 end
 term.clear()
 term.setCursorPos(1,1)
@@ -48,10 +90,10 @@ UserFile = fs.open("./.admin","r")
 User = UserFile.readLine()
 Pronouns = UserFile.readLine()
 print("Welcome",User)
-if modem == nil then
+if #modems == 0 then
 else
-  rednet.open(peripheral.getName(modem))
-  rednet.broadcast("User "..User.." ("..Pronouns..") just went online!")
+  rednet.open(#modems[1])
+  rednet.broadcast("?NL?"..User.." ("..Pronouns..")")
 end
 shell.run("cd ./"..User)
 shell.run("ls")
