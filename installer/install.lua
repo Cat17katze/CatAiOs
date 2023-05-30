@@ -1,4 +1,3 @@
-----
 function eta(todo,done,delay)
   speed=delay/done
   print("ETA:",(speed*todo)*1000)
@@ -63,6 +62,7 @@ function install(getAPM,getSKY)
             print("Are you sure you included the last '/' in the link? (for example '..."..string.sub(build,string.len(build)-2,string.len(build)).."/)")
           end
         end
+     end
      end
      break
   end
