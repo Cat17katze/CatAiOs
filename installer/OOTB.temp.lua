@@ -22,6 +22,7 @@ function setPal(pal)
         h.writeLine("0x7FCC19")
     else
     	shell.run("rm .pal")
+        shell.run(".recolor")
     end
     h.close()
     shell.run(".recolor")
@@ -31,18 +32,6 @@ term.setCursorPos(1,1)
 shell.run(".recolor")
 shell.run("about")
 term.clear()
-while true do
-    term.setCursorPos(1,1)
-    print("Please enter a master password")
-    i=read("*")
-    print("Please enter the password again")
-    if i == read("*") then
-        break
-    else
-        print("The password do not match!")
-    end
-end
-Password = i
 while true do
     term.setCursorPos(1,1)
     term.clear()
@@ -115,6 +104,43 @@ while true do
         print("If that is true then please enter 'yes'")
         print("otherwise press enter")
         if string.upper(read()) == "YES" then
+            term.setCursorPos(1,1)
+            term.clear()
+            print("Ok, we are almost done",Username)
+            local NetList = peripheral.getNames()
+            speakers={}
+            for i=1,#NetList do
+                if peripheral.getType(NetList[i]) == "speaker" then
+                    speakers[#speakers+1] = peripheral.wrap(NetList[i])
+                end
+            end
+            if speakers == 0 then
+                if peripheral.find("speaker") == nil then
+                    os.reboot()
+                else
+                    print("We found a speaker, would you like to download some")
+                    print("music and video related software? [Y/n]")
+                    E,K=os.pullEvent("key")
+                    if K == keys.y then
+                        print("Installing extra software...")
+                        shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/media/DEMO.mm")
+                        shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/src/play.lua")
+                        shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/src/MME.lua")
+                        shell.run("wget run https://raw.githubusercontent.com/CC-YouCube/installer/main/src/installer.lua")
+                    end
+                end
+            else
+                print("We found some speakers, would you like to download some")
+                print("music and video related software? [Y/n]")
+                E,K=os.pullEvent("key")
+                if K == keys.y then
+                    print("Installing extra software...")
+                    shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/media/DEMO.mm")
+                    shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/src/play.lua")
+                    shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/src/MME.lua")
+                    shell.run("wget run https://raw.githubusercontent.com/CC-YouCube/installer/main/src/installer.lua")
+                end
+            end
             break
         else
             os.reboot()
@@ -129,7 +155,6 @@ setPal("")
 h=fs.open(".admin","w")
 h.writeLine(Username)
 h.writeLine(Pronouns)
-h.writeLine(password)
 h.close()
 fs.open("./"..Username.."/tempFile.temp","w").close()
 fs.open("./sys/Lock.lock","w").close()

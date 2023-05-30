@@ -27,17 +27,58 @@ function wget(link,optionalName)
   shell.run("wget",link,optionalName)
 end
 function install(getAPM,getSKY)
-  items=17
+  reset()
+  print("Please select what version of CATAIOS to install")
+  while true do
+    print("For the main version press M")
+    print("the main version is the most stable build")
+    print("For the experimental version press E")
+    print("the experimental version is the most modern version, but it is likely buggy")
+    print("Alternatively press C to enter a custom build")
+    E,K=os.pullEvent("key")
+    if K == keys.m then
+      build="https://raw.githubusercontent.com/TheAio/CatAiOs/main/"
+      break
+    elseif K == keys.e then
+      build="https://raw.githubusercontent.com/TheAio/CatAiOs/Experimental/"
+      break
+    elseif K == keys.c then
+      print("Custom builds are linked similarly to the following example:")
+      print("https://raw.githubusercontent.com/TheAio/CatAiOs/[BUILD]/")
+      while true do
+        print("Enter the build link")
+        build=read()
+        print("Testing if link works...")
+        shell.run("wget",build.."version.info temp.temp")
+        if fs.exists("temp.temp") then
+          print("OK")
+          shell.run("rm temp.temp")
+          break
+        else
+          print("The link does not work")
+          if string.sub(build,string.len(build),string.len(build)) == "/" then
+            print("Are you sure you linked the raw page (no html)?")
+          else
+            print("Are you sure you included the last '/' in the link? (for example '..."..string.sub(build,string.len(build)-2,string.len(build)).."/)")
+          end
+        end
+     end
+     else
+      print("try again, press M E or C")
+     end
+     break
+  end
+  items=5
   startInstall = os.time()
-  shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/installer/introMusic.temp")
+  shell.run("wget",build.."installer/introMusic.temp")
   delay = os.time() - startInstall
   shell.run("bg introMusic.temp")
   shell.run("rm introMusic.temp")
   reset()
+  bar((0/items)*100,"Downloading files","main file")
+  eta(items,1,delay)
+  wget(build.."src/CATAIOS","CATAIOS.lua")
   if getAPM then
-    bar((0/items)*100,"Downloading files","main file")
-    eta(items,1,delay)
-    wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/CATAIOS","CATAIOS.lua")
     bar((1/items)*100,"Downloading files","APM")
     eta(items,2,delay)
     wget("https://raw.githubusercontent.com/TheAio/CC-APM/main/APM","APM")
@@ -53,32 +94,19 @@ function install(getAPM,getSKY)
       shell.run("APM install 19 -y")
     end
   end
-  bar((5/items)*100,"Downloading files","Source files")
-  eta(items,6,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/LoadingScreen.lua",".LoadingScreen")
-  bar((6/items)*100,"Downloading files","Source files")
-  eta(items,7,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/LuaDebugger.lua",".LuaDebugger")
-  bar((7/items)*100,"Downloading files","Source files")
-  eta(items,8,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/installer/OOTB.temp.lua","start")
-  bar((8/items)*100,"Downloading files","Small Source files")
-  eta(items,9,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/about.lua","about")
-  eta(items,10,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/RSBF.lua","RSBF")
-  bar((11/items)*100,"Downloading files","Small Source files")
-  eta(items,11,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/example.bf","example.bf")
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/example.sh","example.sh")
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/echo","echo")
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/ShellRun.lua","ShellRun")
-  eta(items,15,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/recolor.lua",".recolor")
-  eta(items,16,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/encryptFS","encryptFS")
-  eta(items,17,delay)
-  wget("https://raw.githubusercontent.com/TheAio/CatAiOs/main/src/startup","startup")
+  reset()
+  bar((5/items)*100,"Downloading important files","DO NOT SHUTDOWN THE COMPUTER")
+  wget(build.."installer/installList","installList.temp")
+  h=fs.open("installList.temp","r")
+  while true do
+        i=h.readLine()
+        if i == nil then
+           h.close()
+           break
+        else
+          shell.run("wget",build..i,h.readLine())
+        end
+  end
   if getSKY then
     bar(25,"Configuring system","Skynet")
     shell.run("skynet")
@@ -100,6 +128,7 @@ function install(getAPM,getSKY)
   shell.run("set lua.warn_against_use_of_local true")
   shell.run("set lua.function_source false")
   shell.run("set lua.function_args true")
+  shell.run("wget",build.."version.info version.info")
   while true do
     bar(100,"Installation complete!","Welcome!")
     if multishell.getTitle(2) == "shell" then
