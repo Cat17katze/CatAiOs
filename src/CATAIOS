@@ -1,4 +1,7 @@
+print("Starting...")
 shell.run(".recolor")
+shell.run("alias shutdown /.shutdown")
+shell.run("alias reboot /.reboot")
 print("Checking for updates...")
 shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/version.info .temp.temp")
 if fs.exists("./sys/version.info") then
