@@ -66,7 +66,6 @@ function install(getAPM,getSKY)
      else
       print("try again, press M E or C")
      end
-     end
      break
   end
   items=5
