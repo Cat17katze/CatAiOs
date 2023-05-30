@@ -100,6 +100,7 @@ function install(getAPM,getSKY)
   shell.run("set lua.warn_against_use_of_local true")
   shell.run("set lua.function_source false")
   shell.run("set lua.function_args true")
+  shell.run("wget https://raw.githubusercontent.com/TheAio/CatAiOs/main/version.info version.info")
   while true do
     bar(100,"Installation complete!","Welcome!")
     if multishell.getTitle(2) == "shell" then
