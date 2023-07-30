@@ -13,7 +13,7 @@ while true do
     file[#file+1] = i
   end
 end
-handle.close()
+handel.close()
 LIVE=0
 ALPHA=0
 POS=1
@@ -60,7 +60,7 @@ function treat(line)
   end
   return true
 end
-while POS<#flie+1 do
+while POS<#file+1 do
   if treat(file[POS]) then
     POS=POS+1
   else
