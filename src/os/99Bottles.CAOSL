@@ -1,0 +1,11 @@
+$ADD ?100:N
+>
+$SUB ?1:N
+$SPIT
+$OUT ?Bottles of beer on the wall:S
+$SPIT
+$OUT ?Bottles of beer! You take one down, you pass it around.:S
+$JUMP ?3:N
+$OUT No more bottles of beer on the wall, no more bottles of beer.:S
+$OUT Go to the store and buy some more, 99 bottles of beer on the wall.:S
+!
