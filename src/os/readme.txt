@@ -5,7 +5,7 @@ There are 3 value types: Number (N), Address (A), Enviorment (E) and String (S)
 
 To store a value run $STORE ?(POOL):A ?(VALUE:TYPE)
 
-There are three pools, Live (L) Alpha (A) and Beta (B)
+There are two pools, Live (L) Alpha (A)
 
 Live - opperative location
 ### Launchpads
@@ -30,9 +30,9 @@ it removes the value from the live container
 
 To fetch a value to and from the live container use the > or < opperator
 
-Write by running: < (ADRESS):A
+Write by running: <
 
-Fetch by running: > (ADRESS):A
+Fetch by running: >
 ## IO
 Execute a command with $EXEC ?(COMMAND):S
 
@@ -74,7 +74,7 @@ $PAD ?0:N
 
 $ADD ?100:N
 
-> A:A
+>
 
 $PAD ?MAIN_LOOP:S
 
