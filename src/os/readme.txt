@@ -30,25 +30,12 @@ Execute a command with $EXEC ?(COMMAND):S
 
 Take a input with $IN ?(STRING):S
 
-Print a value with $OUT ?(VALUE:TYPE)
+Print a value with $OUT ?(VALUE):S
+
+or with $SPIT
 
 ## Other features
 to halt execution run !
-## Examples
-#### Dubbler
-$PAD ?0:N
-
-$ADD ?2:N
-
-$PAD ?1:N
-
-$ADD ?L:A
-
-$OUT ?L:A
-
-$JUMP ?1:N ?1:N
-
-!
 #### 99 bottles
 
 $PAD ?0:N
