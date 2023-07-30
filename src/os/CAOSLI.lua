@@ -42,7 +42,7 @@ function treat(line)
     if string.sub(i,2,4) == "PAD" then
       Jumps[#Jumps+1]={FA(line)[1],CLINE}
     elseif string.sub(i,2,5) == "JUMP" then
-      if FA(line) > 0 then
+      if tonumber(FA(line)) > 0 then
         POS = FA(line)-1
       end
     elseif string.sub(i,2,4) == "ADD" then
