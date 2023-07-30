@@ -54,6 +54,8 @@ function treat(line)
       LIVE=tonumber(read(FA(line)))
     elseif string.sub(i,2,4) == "OUT" then
       print(FA(line))
+    elseif string.sub(i,2,5) == "SPIT" then
+      print(LIVE)
     end
   end
   return true
