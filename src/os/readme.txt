@@ -8,9 +8,9 @@ There are two pools, Live (L) and Alpha (A)
 Live - opperative location
 Alpha - reserve pool
 ## Jumping
-To jump to a line run $JUMP ?(VALUE:TYPE) ?(LINE):N
+To jump to a line run $JUMP ?(LINE):N
 
-Note: the first value after the @ must be more then one and the second is the target
+Note: jump only happens if live is more then 0, crash if non number value
 ## Counting
 For addition run $ADD ?(VALUE:TYPE)
 
