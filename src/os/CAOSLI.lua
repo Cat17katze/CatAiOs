@@ -31,6 +31,7 @@ function FA(line)
   return string.sub(line,s,e)
 end
 function treat(line)
+  i=line
   if string.sub(i,1,1) == "!" then
     return false
   elseif string.sub(i,1,1) == ">" then
