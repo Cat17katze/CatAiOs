@@ -40,11 +40,8 @@ Take a input with $IN ?(STRING):S
 
 Print a value with $OUT ?(VALUE:TYPE)
 
-Convert a number to string with $CON ?(VALUE):N
-
 To append a value to a file run $APPEND ?(PATH):S ?(VALUE:TYPE)
 
-To read a file run $READ ?(PATH):S
 ## Other features
 to make a enviorment value run $STORE ?(ID):E
 
