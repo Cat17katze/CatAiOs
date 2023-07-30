@@ -45,7 +45,7 @@ To append a value to a file run $APPEND ?(PATH):S ?(VALUE:TYPE)
 ## Other features
 to make a enviorment value run $STORE ?(ID):E
 
-then to set the enviorment value run # ?(ID):N ?(VALUE:TYPE)
+then to set the enviorment value run $SET ?(ID):N ?(VALUE:TYPE)
 
 to clear the value simply run $DROP ?(ID):N
 
